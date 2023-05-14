@@ -58,7 +58,7 @@ const HomePage = ({ catData }) => {
 
         <div className='image-gallery'>
           {
-            catData.slice(0, 4).map( ( cat, index ) => {
+            catData.slice(8).map( ( cat, index ) => {
               const imageClass = index === 0
                 ? 'image-item flow decorated-image'
                 : 'image-item flow'

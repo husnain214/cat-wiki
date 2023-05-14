@@ -1,25 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 const BreedDetails = ({ catBreeds }) => {
+  const [galleryImages, setGalleryImages] = useState([])
   const { id } = useParams()
-  const [breedData, setBreedData] = useState(null)
+  
+  const breedData = catBreeds.filter( breed => id === breed.id).at(0)
 
   useEffect(() => {
-    axios.get(`/api/breeds/${id}`)
-      .then(response => {
-        const { data } = response
+    (async () => {
+      const url = new URL('https://api.thecatapi.com/v1/images/search')
 
-        catBreeds.filter(breed => breed.id === id).map(breed => {
-          setBreedData({
-            ...data,
-            name: breed.name,
-            image: breed.image
-          })
-        })
-      })
-      .catch(error => console.error(error))
+      url.searchParams.set('limit', 10)
+      url.searchParams.set('breed_ids', breedData.id)
+      // eslint-disable-next-line no-undef
+      url.searchParams.set('api_key', process.env.REACT_APP_API_KEY)
+
+      try {
+        const response = await axios.get(url)
+        setGalleryImages(response.data)
+      } catch (error) {
+        throw new Error(error)
+      }
+
+    })()
   }, [])
 
   const Rating = points => {
@@ -49,7 +54,7 @@ const BreedDetails = ({ catBreeds }) => {
       <div className='breed-details flow'>
         <h1 className='fw-600 fs-500'>{breedData.name}</h1>
 
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque, nobis voluptatibus velit laborum necessitatibus saepe! Distinctio, fugiat earum! Aliquam nemo laborum velit explicabo architecto autem accusantium sit accusamus doloribus eaque.</p>
+        <p>{breedData.description}</p>
 
         <div className='flex'>
           <p className='fs-300 fw-700'>Temperament:</p>
@@ -118,30 +123,15 @@ const BreedDetails = ({ catBreeds }) => {
       <h2 className='fw-600 fs-500'>Other photos</h2>
 
       <div className='image-gallery'>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
-        <div className='image-item'>
-          <img src='https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg' alt=''/>
-        </div>
+        {
+          galleryImages.map(image => {
+            return (
+              <div className='image-item' key={image.id}>
+                <img src={image.url} alt= {`${breedData.name} cat`} />
+              </div>
+            )
+          })
+        }
       </div>
     </main>
   )

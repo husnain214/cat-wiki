@@ -11,8 +11,29 @@ const App = () => {
   const [catBreeds, setCatBreeds] = useState([])
 
   useEffect(() => {
-    axios.get('/api/breeds').then(response => setCatBreeds(response.data))
+    (async () => {
+      try {
+        const breedResponse = await axios.get('https://api.thecatapi.com/v1/breeds')
+  
+        const apiPromises = breedResponse.data.map(cat => {
+          return axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${cat.id}`)
+        })
+    
+        const imagesResponse = await Promise.all(apiPromises)
+    
+        const catData = breedResponse.data.map((cat, index) => {
+          cat['image'] = imagesResponse[index]?.data[0]?.url
+          return cat
+        })
+    
+        setCatBreeds(catData)
+      }
+      catch(error) {
+        console.log(error)
+      }
+    })()
   }, [])
+  
 
   return (
     <>
