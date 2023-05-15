@@ -1,7 +1,5 @@
 import HomePage from './HomePage'
 import PropTypes from 'prop-types'
-// import BreedDetails from './BreedDetails'
-// import SearchedBreeds from './SearchedBreeds'
 
 const Main = ({ catData }) => {
   return (

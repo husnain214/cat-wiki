@@ -2,12 +2,35 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import voteService from '../services/voteService'
+
 const BreedDetails = ({ catBreeds }) => {
   const [galleryImages, setGalleryImages] = useState([])
   const { id } = useParams()
-  
   const breedData = catBreeds.filter( breed => id === breed.id).at(0)
 
+  const setCatVote = async () => {
+    const catVotes = await voteService.getCatVotes()
+    const searchedCat = catVotes.filter( cat => cat.id === id)?.at(0)
+
+    if(searchedCat !== undefined) {
+      await voteService.updateCatVotes(id, { 
+        ...searchedCat, 
+        votes: searchedCat.votes + 1 
+      })
+      
+      return
+    }
+
+    await voteService.setCatVotes({ 
+      id: breedData.id, 
+      votes: 1, 
+      name: breedData.name, 
+      desc: breedData.description,
+      image: breedData.image
+    })
+  }
+  
   useEffect(() => {
     (async () => {
       const url = new URL('https://api.thecatapi.com/v1/images/search')
@@ -20,6 +43,7 @@ const BreedDetails = ({ catBreeds }) => {
       try {
         const response = await axios.get(url)
         setGalleryImages(response.data)
+        setCatVote()
       } catch (error) {
         throw new Error(error)
       }

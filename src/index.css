@@ -29,7 +29,7 @@
 @media (width < 35em) {
     :root {
       --fs-600: 2.125rem;
-      --fs-500: 1.3rem;
+      --fs-500: 1.2rem;
       --fs-400: 1rem;
       --fs-300: 0.85rem;
     }
@@ -74,14 +74,18 @@ html:focus-within {
 }
 
 /* Set core body defaults */
-body {
+#root {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+
   font-family: var(--ff-serif);
   font-size: var(--fs-400);
   font-weight: 500;
   color: hsl( var(--clr-primary-500) );
+
+  display: flex;
+  flex-direction: column;
   padding-inline: min(4vw, 3em);
 }
 
@@ -221,6 +225,7 @@ header {
 
 footer {
   border-radius: 2em 2em 0 0;
+  margin-top: auto;
 }
 
 @media (width < 45em) {
@@ -307,10 +312,6 @@ footer {
   z-index: -1;
 }
 
-.image-gallery .decorated-image::before {
-  inset: 10% 95% 30% -3%;
-}
-
 /* home page */
 
 .hero-section {
@@ -323,7 +324,16 @@ footer {
 
 @media(width < 35em) {
   .hero-section {
+    background-image: url(./assets/HeroImagesm.png);
+  }
+}
+
+@media(width < 45em) {
+  .hero-section {
     min-height: auto;
+    border-radius: 4em 4em 0 0;
+    background-image: url(./assets/HeroImagemd.png);
+    --gap: 1.5rem;
   }
 }
 
@@ -332,7 +342,7 @@ footer {
 }
 
 .hero-logo {
-  width: 20em;
+  width: min(50%, 20em);
 }
 
 .search-bar {
@@ -409,11 +419,15 @@ footer {
 }
 
 .most-searched-section {
-  border-radius: 0 0 2em 2em;
+  border-radius: 0 0 4em 4em;
   --flow-spacing: 2rem;
 }
 
 @media (width > 35em) {
+  .most-searched-section {
+    border-radius: 0 0 2em 2em;
+  }
+
   .most-searched-section h2 ~ .grid {
     grid-auto-flow: column;
   }
@@ -481,6 +495,16 @@ footer {
   --min-item-width: 13rem;
 }
 
+.image-gallery .decorated-image::before {
+  inset: 10% 95% 30% -3%;
+}
+
+@media (width < 45em) {
+  .image-gallery .decorated-image::before {
+    inset: 15% 95% 38% -4%;
+  }
+}
+
 .breed-details .flex {
   align-items: center;
   flex-wrap: wrap;
@@ -508,6 +532,14 @@ footer {
 }
 
 .searched-breeds__article {
+  counter-increment: breed-counter;
+}
+
+.searched-breeds-section h2::before {
+  content: counter(breed-counter) '. ';
+}
+
+.searched-breeds__article {
   justify-items: center;
   text-align: center;
   grid-template-areas: 
@@ -518,7 +550,6 @@ footer {
 
 .searched-breeds__article > img {
   grid-area: article-image;
-  max-width: 10rem;
   border-radius: 2em;
 }
 
@@ -540,8 +571,10 @@ footer {
   }
 
   .searched-breeds__article {
+    column-gap: 2rem;
     justify-items: start;
     text-align: left;
+    grid-template-columns: 10rem auto;
     grid-template-areas: 
       'article-image article-title'
       'article-image article-paragraph';

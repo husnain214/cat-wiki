@@ -47,18 +47,18 @@ const HomePage = ({ catData }) => {
         <div className='grid'>
           <p className='fs-600 fw-700 text-primary-600'>66+ Breeds for you to discover</p>
           
-          <div className='flex align-items-center justify-end'>
+          <Link to='/breed/mostSearched' className='flex align-items-center justify-end'>
             <span className='read-more'>Read more</span>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
             </svg>
-          </div>
+          </Link>
         </div>
 
         <div className='image-gallery'>
           {
-            catData.slice(8).map( ( cat, index ) => {
+            catData.slice(0, 8).map( ( cat, index ) => {
               const imageClass = index === 0
                 ? 'image-item flow decorated-image'
                 : 'image-item flow'
