@@ -269,16 +269,6 @@ footer {
   border-radius: 20px;
 }
 
-.read-more {
-  color: hsl( var(--clr-primary-500) / 0.6);
-  text-transform: uppercase;
-}
-
-.read-more ~ svg {
-  stroke: hsl( var(--clr-primary-500) / 0.6);
-  max-width: 2rem;
-}
-
 .heading-decoration {
   position: relative;
 }
@@ -420,16 +410,11 @@ footer {
 
 .most-searched-section {
   border-radius: 0 0 4em 4em;
-  --flow-spacing: 2rem;
 }
 
 @media (width > 35em) {
   .most-searched-section {
     border-radius: 0 0 2em 2em;
-  }
-
-  .most-searched-section h2 ~ .grid {
-    grid-auto-flow: column;
   }
 }
 
@@ -442,6 +427,16 @@ footer {
 
 .article-section .heading-decoration::before {
   top: -10px;
+}
+
+.read-more {
+  color: hsl( var(--clr-primary-500) / 0.6);
+  text-transform: uppercase;
+}
+
+.read-more ~ svg {
+  stroke: hsl( var(--clr-primary-500) / 0.6);
+  max-width: 2rem;
 }
 
 .article-images.grid {
@@ -524,43 +519,6 @@ footer {
   background-color: hsl( var(--clr-neutral-300) );
 }
 
-/* searched breeds page */
-
-.searched-breeds-section {
-  padding-bottom: min(6vw, 6em);
-  --flow-spacing: 2rem;
-}
-
-.searched-breeds__article {
-  counter-increment: breed-counter;
-}
-
-.searched-breeds-section h2::before {
-  content: counter(breed-counter) '. ';
-}
-
-.searched-breeds__article {
-  justify-items: center;
-  text-align: center;
-  grid-template-areas: 
-    'article-image'
-    'article-title'
-    'article-paragraph';
-}
-
-.searched-breeds__article > img {
-  grid-area: article-image;
-  border-radius: 2em;
-}
-
-.searched-breeds__article > h2 {
-  grid-area: article-title;
-}
-
-.searched-breeds__article > p {
-  grid-area: article-paragraph;
-}
-
 @media (width > 45em) {
   .breed-details-section {
     grid-template-columns: 0.5fr 1fr;
@@ -568,16 +526,6 @@ footer {
       'breed-image breed-details'
       'secondary-title secondary-title'
       'image-gallery image-gallery';
-  }
-
-  .searched-breeds__article {
-    column-gap: 2rem;
-    justify-items: start;
-    text-align: left;
-    grid-template-columns: 10rem auto;
-    grid-template-areas: 
-      'article-image article-title'
-      'article-image article-paragraph';
   }
 }
 

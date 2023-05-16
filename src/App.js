@@ -6,11 +6,9 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Main from './components/Main'
 import BreedDetails from './components/BreedDetails'
-import SearchedBreeds from './components/SearchedBreeds'
 
 const App = () => {
   const [catBreeds, setCatBreeds] = useState([])
-  const [popularCats, setPopularCats] = useState([])
 
   useEffect(() => {
     (async () => {
@@ -29,10 +27,6 @@ const App = () => {
         })
     
         setCatBreeds(catData)
-
-        const searchedCats = await axios.get('http://localhost:3001/cats?_sort=votes&_order=asc&_limit=10')
-        
-        setPopularCats(searchedCats.data)
       }
       catch(error) {
         console.log(error)
@@ -47,7 +41,6 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Main catData = {catBreeds} />} />
         <Route path='/breed/:id' element={<BreedDetails catBreeds={catBreeds} />} />
-        <Route path='/breed/mostSearched' element={<SearchedBreeds popularCats={popularCats} />} />
       </Routes>
       <Footer />
     </>

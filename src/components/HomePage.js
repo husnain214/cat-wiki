@@ -43,18 +43,7 @@ const HomePage = ({ catData }) => {
 
       <div className='most-searched-section bg-neutral-300 flow grid align-center container'>
         <h2 className='fs-400 heading-decoration'>Most Searched Breeds</h2>
-
-        <div className='grid'>
-          <p className='fs-600 fw-700 text-primary-600'>66+ Breeds for you to discover</p>
-          
-          <Link to='/breed/mostSearched' className='flex align-items-center justify-end'>
-            <span className='read-more'>Read more</span>
-
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-            </svg>
-          </Link>
-        </div>
+        <p className='fs-600 fw-700 text-primary-600'>66+ Breeds for you to discover</p>
 
         <div className='image-gallery'>
           {
@@ -82,13 +71,13 @@ const HomePage = ({ catData }) => {
           <h2 className='fw-700 fs-600 heading-decoration'>Why should you have a cat?</h2>
           <p>Having a cat aroung you can actually trigger the release of calming chemicals in your body which lower your stress and anxiety levels.</p>
           
-          <div className='flex align-items-center'>
+          <a href='https://www.goodnet.org/articles/7-scientifically-proven-health-benefits-being-cat-owner' target='_blank' className='flex align-items-center' rel="noreferrer">
             <span className='read-more'>Read more</span>
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
             </svg>
-          </div>
+          </a>
         </div>
 
         <div className='article-images grid'>
